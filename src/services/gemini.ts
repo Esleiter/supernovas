@@ -26,7 +26,9 @@ export const generateGemini = async (title: string, description: string) => {
         }
       }
       
-      Do not respond with your own suggestions or recommendations or feedback.`;
+      Do not respond with your own suggestions or recommendations or feedback.
+      Your response should strictly be a JSON object with the above schema.
+      `;
 
     const result = await model.generateContent(prompt);
     const response = JSON.parse(result.response.text());
