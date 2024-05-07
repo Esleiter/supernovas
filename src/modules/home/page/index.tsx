@@ -14,10 +14,10 @@ const Home = () => {
       //   validationSchema: loginSchema,
       onSubmit: async ({ name, description }) => {
         // console.log(name, description)
-        // setIsLoading(true)
+        setIsLoading(true)
         const res = await generateGemini(name, description)
         console.log('resp', res);
-        // setIsLoading(false)
+        setIsLoading(false)
       },
     });
   return (
@@ -44,7 +44,7 @@ const Home = () => {
           />
         </Grid>
         <Grid container justifyContent={'center'} marginTop={2}>
-          <Button variant="contained" type="submit">Enviar</Button>
+          <Button variant="contained" type="submit" disabled={isLoading}>Enviar</Button>
         </Grid>
       </Box>
     </Card>
