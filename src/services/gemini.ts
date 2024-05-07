@@ -22,11 +22,15 @@ export const generateGemini = async (title: string, description: string) => {
         "requirements": {
           "technologies": [],
           "requiredExperience": []
-        }
+        },
+        "developer": {
+          "skills": []
+        } 
       }
     `;
 
     const result = await model.generateContent(prompt);
+    console.log(result.response.text())
     const response = JSON.parse(result.response.text());
     return response;
 };
