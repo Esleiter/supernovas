@@ -8,6 +8,7 @@ export const generateGemini = async (title: string, description: string) => {
     ${description}
     
     Here's the output schema:
+    
     {
         "client": {
           "name": "",
@@ -24,7 +25,8 @@ export const generateGemini = async (title: string, description: string) => {
           "requiredExperience": []
         }
       }
-    `;
+      
+      Do not respond with your own suggestions or recommendations or feedback.`;
 
     const result = await model.generateContent(prompt);
     const response = JSON.parse(result.response.text());
