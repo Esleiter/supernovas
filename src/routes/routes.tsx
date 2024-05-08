@@ -6,6 +6,7 @@ import HomeLayout from "../layouts/Auth/HomeLayout";
 import Login from "../modules/auth/Login";
 import ErrorPage from "../modules/auth/ErrorPage";
 import { ProtectedLayout } from "../layouts/Auth/ProtectedLayout";
+import Layout from "../modules/home/page";
 
 // eslint-disable-next-line
 const Loader = (Component: any) => (props: any) =>
@@ -15,7 +16,7 @@ const Loader = (Component: any) => (props: any) =>
     </Suspense>
   );
 
-const PageHome = Loader(lazy(() => import('../modules/home/page')))
+const PageHome = Loader(lazy(() => import("../modules/home/Home.tsx")));
 
 const routes: RouteObject[] = [
   {
@@ -32,11 +33,17 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "",
-        element: <Navigate to="/home" />,
-      },
-      {
-        path: "home",
-        element: <PageHome />,
+        element: <Layout />,
+        children: [
+          {
+            path: "",
+            element: <Navigate to="/home" />,
+          },
+          {
+            path: "home",
+            element: <PageHome />,
+          },
+        ],
       },
     ],
   },

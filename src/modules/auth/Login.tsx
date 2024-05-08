@@ -7,12 +7,15 @@ import {
   Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
-import { setToken } from "../slice/authSlice";
+import { setUser } from "../slice/authSlice";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { ButtonSubmit } from "../shared/ButtonSubmit";
 import PasswordField from "../shared/PasswordField";
 import { styled } from "@mui/system";
 import { useAppDispatch } from "../../store/useRedux";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase";
+import { useEffect } from "react";
 
 const ContainerWrapper = styled("div")(() => ({
   height: "100vh",
@@ -32,7 +35,9 @@ const StyledImage = styled("img")(() => ({
 }));
 
 const Login = () => {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
+  const [signInWithEmailAndPassword, user, loading] =
+    useSignInWithEmailAndPassword(auth);
   const { handleSubmit, handleChange, values, touched, errors, setFieldValue } =
     useFormik({
       initialValues: {
@@ -41,10 +46,14 @@ const Login = () => {
       },
       //   validationSchema: loginSchema,
       onSubmit: async ({ email, password }) => {
-        console.log(email, password);
-        dispatch(setToken(true))
+        await signInWithEmailAndPassword(email, password);
       },
     });
+
+  useEffect(() => {
+    if(user) dispatch(setUser(user));
+  }, [user, dispatch]);
+
   return (
     <ContainerWrapper>
       <Grid container>
@@ -106,7 +115,7 @@ const Login = () => {
                     helperText={touched.password && errors.password}
                   />
                 </Grid>
-                <ButtonSubmit isLoading={false} icon="nope" fullWidth>
+                <ButtonSubmit isLoading={loading} icon="nope" fullWidth>
                   Iniciar sesión
                 </ButtonSubmit>
               </Grid>
