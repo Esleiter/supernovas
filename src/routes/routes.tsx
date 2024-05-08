@@ -16,6 +16,7 @@ const Loader = (Component: any) => (props: any) =>
   );
 
 const PageHome = Loader(lazy(() => import('../modules/home/page')))
+const PageRelevant = Loader(lazy(() => import('../modules/relevant/page')))
 
 const routes: RouteObject[] = [
   {
@@ -37,6 +38,10 @@ const routes: RouteObject[] = [
       {
         path: "home",
         element: <PageHome />,
+      },
+      {
+        path: "relevant-data",
+        element: <PageRelevant />,
       },
     ],
   },
