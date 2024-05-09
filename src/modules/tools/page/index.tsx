@@ -3,17 +3,17 @@ import { useFormik } from "formik";
 import { useSaveData } from "../../../services/useSaveData";
 
 const Tools = () => {
-  const { save, isLoading } = useSaveData()
+  const { save, isLoading } = useSaveData();
   const { handleSubmit, handleChange, values } = useFormik({
     initialValues: {
       name: "",
       data: "",
     },
     //   validationSchema: loginSchema,
-    onSubmit: async ({ name, data }) => {
-      const dataJSON = JSON.parse(data)
-      console.log(name, dataJSON)
-      await save(name, dataJSON)
+    onSubmit: async ({ name, data }, { resetForm }) => {
+      const dataJSON = JSON.parse(data);
+      await save(name, dataJSON);
+      resetForm()
     },
   });
   return (
