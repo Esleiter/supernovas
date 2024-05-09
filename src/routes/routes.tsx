@@ -19,6 +19,7 @@ const Loader = (Component: any) => (props: any) =>
 const PageHome = Loader(lazy(() => import("../modules/home/Home.tsx")));
 const PageRelevant = Loader(lazy(() => import('../modules/relevant/page')))
 const PageTools = Loader(lazy(() => import('../modules/tools/page')))
+const PageConsultans = Loader(lazy(() => import('../modules/consultans/page')))
 
 const routes: RouteObject[] = [
   {
@@ -52,6 +53,10 @@ const routes: RouteObject[] = [
           {
             path: "tools",
             element: <PageTools />,
+          },
+          {
+            path: "consultans",
+            element: <PageConsultans />,
           },
         ],
       },
