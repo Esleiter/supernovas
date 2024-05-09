@@ -18,6 +18,7 @@ const Loader = (Component: any) => (props: any) =>
 
 const PageHome = Loader(lazy(() => import("../modules/home/Home.tsx")));
 const PageRelevant = Loader(lazy(() => import('../modules/relevant/page')))
+const PageTools = Loader(lazy(() => import('../modules/tools/page')))
 
 const routes: RouteObject[] = [
   {
@@ -47,6 +48,10 @@ const routes: RouteObject[] = [
           {
             path: "relevant-data",
             element: <PageRelevant />,
+          },
+          {
+            path: "tools",
+            element: <PageTools />,
           },
         ],
       },

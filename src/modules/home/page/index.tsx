@@ -7,6 +7,10 @@ const PrincipalWrapper = styled("div")(() => ({
   minHeight: "100vh",
 }));
 
+const OutletWrapper = styled("div")(() => ({
+  width: "100%"
+}));
+
 const Layout = () => {
   const outlet = useOutlet();
   return (
@@ -15,7 +19,7 @@ const Layout = () => {
         <Grid item width={"100%"} marginBottom={2}>
           <Header />
         </Grid>
-        <Grid>{outlet}</Grid>
+        <OutletWrapper>{outlet}</OutletWrapper>
       </Grid>
     </PrincipalWrapper>
   );
