@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
+const genAI = new GoogleGenerativeAI(`${process.env.VITE_API_KEY}`);
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
 export const generateGemini = async (title: string, description: string) => {
@@ -34,7 +34,7 @@ export const generateGemini = async (title: string, description: string) => {
       `;
 
     const result = await model.generateContent(prompt);
-    console.log(result.response.text())
     const response = JSON.parse(result.response.text());
+    console.log(response);
     return response;
 };
