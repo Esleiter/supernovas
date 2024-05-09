@@ -1,22 +1,19 @@
 import { Box, Button, Card, Grid, TextField } from "@mui/material";
 import { useFormik } from "formik";
-import { generateGemini } from "../../services/gemini";
-import { useState } from "react";
+import { useSaveData } from "../../../services/useSaveData";
 
-const Home = () => {
-  const [isLoading, setIsLoading] = useState(false);
+const Tools = () => {
+  const { save, isLoading } = useSaveData();
   const { handleSubmit, handleChange, values } = useFormik({
     initialValues: {
       name: "",
-      description: "",
+      data: "",
     },
     //   validationSchema: loginSchema,
-    onSubmit: async ({ name, description }) => {
-      // console.log(name, description)
-      setIsLoading(true);
-      const res = await generateGemini(name, description);
-      console.log("resp", res);
-      setIsLoading(false);
+    onSubmit: async ({ name, data }, { resetForm }) => {
+      const dataJSON = JSON.parse(data);
+      await save(name, dataJSON);
+      resetForm()
     },
   });
   return (
@@ -28,19 +25,19 @@ const Home = () => {
               id="name"
               fullWidth
               autoFocus
-              label="Nombre del proyecto"
+              label="Nombre de la colleccion"
               value={values.name}
               onChange={handleChange}
             />
             <TextField
-              id="description"
+              id="data"
               fullWidth
               autoFocus
-              label="Descripcion"
-              value={values.description}
+              label="Data json"
+              value={values.data}
               onChange={handleChange}
               multiline
-              rows={4}
+              rows={25}
             />
           </Grid>
           <Grid container justifyContent={"center"} marginTop={2}>
@@ -54,4 +51,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Tools;
