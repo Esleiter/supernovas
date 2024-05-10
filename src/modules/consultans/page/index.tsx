@@ -37,7 +37,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const Consultans = () => {
   const { data } = useGetData("consultant");
-  console.log("conm", data);
   return (
     <Grid>
       <TableContainer component={Paper}>

@@ -2,9 +2,12 @@ import { Box, Button, Card, Grid, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { generateGemini } from "../../services/gemini";
 import { useState } from "react";
+import { ResponseIA } from "../interface/types";
+import CardResult from "./CardResult";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [response, setResponse] = useState<ResponseIA>()
   const { handleSubmit, handleChange, values } = useFormik({
     initialValues: {
       name: "",
@@ -15,6 +18,7 @@ const Home = () => {
       // console.log(name, description)
       setIsLoading(true);
       const res = await generateGemini(name, description);
+      setResponse(res)
       console.log("resp", res);
       setIsLoading(false);
     },
@@ -50,6 +54,9 @@ const Home = () => {
           </Grid>
         </Box>
       </Card>
+      <Grid container marginTop={2}>
+        <CardResult />
+      </Grid>
     </Grid>
   );
 };
