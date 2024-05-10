@@ -7,7 +7,7 @@ import CardResult from "./CardResult";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState<ResponseIA>()
+  const [response, setResponse] = useState<ResponseIA>();
   const { handleSubmit, handleChange, values } = useFormik({
     initialValues: {
       name: "",
@@ -18,7 +18,7 @@ const Home = () => {
       // console.log(name, description)
       setIsLoading(true);
       const res = await generateGemini(name, description);
-      setResponse(res)
+      setResponse(res);
       console.log("resp", res);
       setIsLoading(false);
     },
@@ -54,9 +54,11 @@ const Home = () => {
           </Grid>
         </Box>
       </Card>
-      <Grid container marginTop={2}>
-        <CardResult />
-      </Grid>
+      {response && (
+        <Grid container marginTop={2}>
+          <CardResult budget={response.budget} client={response.client} developer={response.developer} duration={response.duration} requirements={response.requirements} />
+        </Grid>
+      )}
     </Grid>
   );
 };
