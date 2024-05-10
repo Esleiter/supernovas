@@ -15,6 +15,7 @@ import {
   tableCellClasses,
 } from "@mui/material";
 import { useGetData } from "../../../services/useSaveData";
+import { ConsultansInterface } from "../../interface/types";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -36,7 +37,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const Consultans = () => {
-  const { data } = useGetData("consultant");
+  const { data } = useGetData<ConsultansInterface>("consultant");
+  console.log(data)
   return (
     <Grid>
       <TableContainer component={Paper}>
@@ -51,7 +53,7 @@ const Consultans = () => {
           </TableHead>
           <TableBody>
             {data.map((row) => (
-              <StyledTableRow key={row.name}>
+              <StyledTableRow key={row?.id}>
                 <StyledTableCell component="th" scope="row">
                   <Stack direction="row" spacing={2}>
                     <Avatar

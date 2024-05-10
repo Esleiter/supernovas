@@ -12,17 +12,22 @@ import Item from "./Item";
 import { useEffect, useState } from "react";
 import { ResponseIA } from "../interface/types";
 
-const CardResult: React.FC<ResponseIA> = ({ budget, client, developer, duration, requirements }) => {
+const CardResult: React.FC<ResponseIA> = ({
+  budget,
+  client,
+  developer,
+  duration,
+  requirements,
+}) => {
   const [countryValue, setCountryValue] = useState("");
-  const [budgetValue, setBudgetValue] = useState("")
-  const [durationValue, setDurationValue] = useState("")
-
+  const [budgetValue, setBudgetValue] = useState("");
+  const [durationValue, setDurationValue] = useState("");
   useEffect(() => {
     setCountryValue(client.location.country);
-    setBudgetValue(budget)
-    setDurationValue(duration)
-    countryValue
-  },[budget, client, developer, duration, requirements])
+    setBudgetValue(budget);
+    setDurationValue(duration);
+    // countryValue;
+  }, [budget, client, developer, duration, requirements]);
 
   return (
     <Card variant="outlined" sx={{ width: "100%" }}>
@@ -39,7 +44,10 @@ const CardResult: React.FC<ResponseIA> = ({ budget, client, developer, duration,
       </Box>
       <Divider />
       <Box sx={{ p: 2 }}>
-        <Item title="Requerimentos de experiencia" options={requirements.requiredExperience} />
+        <Item
+          title="Requerimentos de experiencia"
+          options={requirements.requiredExperience}
+        />
         <Item title="Tecnologias" options={requirements.technologies} />
         <Item title="Skill" options={developer.skills} />
 
@@ -98,11 +106,11 @@ const CardResult: React.FC<ResponseIA> = ({ budget, client, developer, duration,
         </Stack>
 
         <Stack direction="column">
-        <Grid container justifyContent={"center"} marginTop={6}>
-        <Button variant="contained" type="submit">
-          Enviar
-        </Button>
-      </Grid>
+          <Grid container justifyContent={"center"} marginTop={6}>
+            <Button variant="contained" type="submit">
+              Enviar
+            </Button>
+          </Grid>
         </Stack>
       </Box>
     </Card>
