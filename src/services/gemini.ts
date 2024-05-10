@@ -36,6 +36,5 @@ export const generateGemini = async (title: string, description: string) => {
 
     const result = await model.generateContent(prompt);
     const response = JSON.parse(result.response.text());
-    console.log(response);
     return response;
 };
