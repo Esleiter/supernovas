@@ -25,6 +25,7 @@ export const generateGemini = async (title: string, description: string) => {
           "requiredExperience": []
         },
         "developer": {
+          "profiles": [],
           "skills": []
         } 
       }
@@ -35,6 +36,7 @@ export const generateGemini = async (title: string, description: string) => {
       `;
 
     const result = await model.generateContent(prompt);
+    console.log('ia', result.response.text())
     const response = JSON.parse(result.response.text());
     return response;
 };

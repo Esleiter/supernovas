@@ -46,6 +46,12 @@ const Header = () => {
           </Button>
           <Button
             color="inherit"
+            onClick={ () => navigate('/projects')}
+          >
+            Proyectos
+          </Button>
+          <Button
+            color="inherit"
             onClick={ () => navigate('/consultans')}
           >
             Consultores

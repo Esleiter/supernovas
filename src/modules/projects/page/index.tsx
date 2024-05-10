@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { useGetData } from "../../../services/useSaveData";
 import { ConsultansInterface } from "../../interface/types";
+import { ResponseProjects } from "../interface";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -36,8 +37,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Consultans = () => {
-  const { data } = useGetData<ConsultansInterface>("consultant");
+type Projects = { id: string} & ResponseProjects
+
+const DetailProject = () => {
+  const { data } = useGetData<Projects>("projects");
+  console.log(data)
+
   return (
     <Grid>
       <TableContainer component={Paper}>
@@ -47,7 +52,7 @@ const Consultans = () => {
               <StyledTableCell>Nombre</StyledTableCell>
               <StyledTableCell>Localidad</StyledTableCell>
               <StyledTableCell align="center">Habilidades</StyledTableCell>
-              <StyledTableCell>Educación</StyledTableCell>
+              <StyledTableCell align="center">Presupuesto</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -55,18 +60,14 @@ const Consultans = () => {
               <StyledTableRow key={row?.id}>
                 <StyledTableCell component="th" scope="row">
                   <Stack direction="row" spacing={2}>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={row?.personal_data?.profileImage}
-                    />
-                    <Typography>{row?.personal_data?.name}</Typography>
+                    <Typography>{row?.client?.name}</Typography>
                   </Stack>
                 </StyledTableCell>
-                <StyledTableCell align="right">
-                  {row?.personal_data?.location}
+                <StyledTableCell align="left">
+                  {row?.client?.location?.city}
                 </StyledTableCell>
                 <StyledTableCell width={5}>
-                  {row?.skills?.map((skill, index) => (
+                  {row?.developer?.skills?.map((skill, index) => (
                     <Chip
                       color="primary"
                       sx={{ marginRight: 1, marginTop: 1 }}
@@ -76,15 +77,8 @@ const Consultans = () => {
                     />
                   ))}
                 </StyledTableCell>
-                <StyledTableCell align="right">
-                  {row?.education?.map((item, index) => (
-                    <div key={`${item?.institution}-${index}`}>
-                      <Typography variant="subtitle2">
-                        {item?.institution}
-                      </Typography>
-                      <Typography variant="caption">{item?.degree}</Typography>
-                    </div>
-                  ))}
+                <StyledTableCell align="center">
+                  {row?.budget}
                 </StyledTableCell>
               </StyledTableRow>
             ))}
@@ -95,4 +89,4 @@ const Consultans = () => {
   );
 };
 
-export default Consultans;
+export default DetailProject;

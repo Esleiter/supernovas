@@ -15,7 +15,6 @@ const Home = () => {
     },
     //   validationSchema: loginSchema,
     onSubmit: async ({ name, description }) => {
-      // console.log(name, description)
       setIsLoading(true);
       const res = await generateGemini(name, description);
       setResponse(res);
@@ -55,8 +54,8 @@ const Home = () => {
         </Box>
       </Card>
       {response && (
-        <Grid container marginTop={2}>
-          <CardResult budget={response.budget} client={response.client} developer={response.developer} duration={response.duration} requirements={response.requirements} />
+        <Grid container marginTop={2} marginBottom={3}>
+          <CardResult data={response}  />
         </Grid>
       )}
     </Grid>
