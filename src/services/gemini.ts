@@ -3,18 +3,15 @@ const genAI = new GoogleGenerativeAI(`${process.env.VITE_API_KEY}`);
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
 function eliminarBackticksJSON(texto: string): string {
-  const regex = /```[Jj][Ss][Oo][Nn]([\s\S]*?)```|\s*```/g;
-  return texto.replace(regex, '');
+  
 }
 const generateProfiles = async (title: string, description: string) => {
     const profilesPrompt = `
-    title :${title}
-    description: ${description}
+    titulo:${title}
+    descripcion: ${description}
 
     Con el titulo y descripciones anteriores, ejecuta lo siguiente:
-
-    Do not respond with your own suggestions or recommendations or feedback.
-    Your response should strictly be a JSON object with the above schema.
+    Contruye un JSON con la siguiente estructura:
     
     Here's the output schema:
     [{
@@ -37,10 +34,12 @@ const generateProfiles = async (title: string, description: string) => {
       "profileTitle": "", // e.g. "DevOps"
       "skills": [] // e.g. ["Docker", "Kubernetes", "Jenkins"]
     }]
-    IMPORTANT: ANSWER VARIOUS PROFILES ACCORDING TO THE DESCRIPTION OF THE PROJECT, ITS SCOPE, DURATION Y BUDGET, la idea es armar un equipo completo!    
+    Responde estríctamente con un objeto JSON con la estructura anterior. Sin comentarios ni sugerencias adicionales. Nada fuera de la estructura solicitada.
+    IMPORTANTE: ANSWER VARIOUS PROFILES ACCORDING TO THE DESCRIPTION OF THE PROJECT, ITS SCOPE, DURATION Y BUDGET, la idea es armar un equipo completo!
     `;
 
     const profiles = await model.generateContent(profilesPrompt);
+    console.log(profiles.response.text());
     const eliminarBackticks = eliminarBackticksJSON(profiles.response.text());
     const profilesResponse = JSON.parse(eliminarBackticks);
     return profilesResponse;
@@ -48,15 +47,11 @@ const generateProfiles = async (title: string, description: string) => {
 
 export const generateGemini = async (title: string, description: string) => {
     const prompt = `
-    title: ${title}
-    description: ${description}
+    titulo: ${title}
+    descripcion: ${description}
 
     Con el titulo y descripciones anteriores, ejecuta lo siguiente:
-
-    Do not respond with your own suggestions or recommendations or feedback.
-    Your response should strictly be a JSON object with the above schema.
-    
-    Here's the output schema:
+    Contruye un JSON con la siguiente estructura:
     
     {
       "client": {
@@ -71,15 +66,78 @@ export const generateGemini = async (title: string, description: string) => {
       "budget": "", // e.g. "1000.00", "2000.00", "5000.00", "10000.00", "20000.00"
       "scope": [], // e.g. "WEB", "APP", "E-COMMERCE", "LANDING PAGE", "MOBILE", "ANDROID", "IOS"
       "requiredProfiles": []
-    }      
+    }
+    Responde estríctamente con un objeto JSON con la estructura anterior. Sin comentarios ni sugerencias adicionales. Nada fuera de la estructura solicitada.  
       `;
 
     const result = await model.generateContent(prompt);
+    console.log(result.response.text());
     const profiles = await generateProfiles(title, description);
     const eliminarBackticks = eliminarBackticksJSON(result.response.text());
     const response = JSON.parse(eliminarBackticks);
 
     response.requiredProfiles = profiles;
 
-    return response;
+    const objeto = {
+      "client": {
+          "name": null,
+          "industry": "Logística",
+          "location": {
+              "city": "Ciudad de México",
+              "country": "México"
+          }
+      },
+      "duration": "6",
+      "budget": "200000.00",
+      "scope": [
+          "WEB",
+          "APP",
+          "MOBILE"
+      ],
+      "requiredProfiles": [
+          {
+              "profileTitle": "Desarrollador Full-Stack",
+              "skills": [
+                  "Desarrollo web",
+                  "Desarrollo móvil",
+                  "Algoritmos de optimización",
+                  "Sistemas de seguimiento GPS",
+                  "Logística"
+              ]
+          },
+          {
+              "profileTitle": "Experto en Logística",
+              "skills": [
+                  "Optimización de rutas",
+                  "Sistemas de seguimiento vehicular",
+                  "Planificación de entregas"
+              ]
+          },
+          {
+              "profileTitle": "Project Manager",
+              "skills": [
+                  "Gestión de proyectos",
+                  "Metodologías ágiles",
+                  "Herramientas de gestión de proyectos"
+              ]
+          },
+          {
+              "profileTitle": "Diseñador UX/UI",
+              "skills": [
+                  "Diseño de interfaz de usuario",
+                  "Diseño centrado en el usuario",
+                  "Experiencia de usuario"
+              ]
+          },
+          {
+              "profileTitle": "QA Tester",
+              "skills": [
+                  "Pruebas de software",
+                  "Pruebas de rendimiento",
+                  "Automatización de pruebas"
+              ]
+          }
+      ]
+  }
+    return objeto;
 };
