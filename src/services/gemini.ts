@@ -17,8 +17,8 @@ const generateProfiles = async (title: string, description: string) => {
     titulo:${title}
     descripcion: ${description}
 
-    Con el titulo y descripciones anteriores, ejecuta lo siguiente:
-    Contruye un JSON con la siguiente estructura:
+    Con el titulo y descripciones anteriores como referencia, ejecuta lo siguiente:
+    Contruye un JSON con la siguiente estructura de perfiles de equipo de trabajo:
     
     Here's the output schema:
     [{
