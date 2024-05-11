@@ -48,8 +48,8 @@ const Details = () => {
       const eliminarBackticks = eliminarBackticksJSON(value?.response.text());
       const response = JSON.parse(eliminarBackticks);
       // setLoading(false);
-      // setResult(response);
-      setResult(respmatch)
+      setResult(response);
+      //setResult(respmatch)
     };
     resp()
   }, []);
