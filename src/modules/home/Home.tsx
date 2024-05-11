@@ -4,11 +4,8 @@ import { generateGemini } from "../../services/gemini";
 import { useState } from "react";
 import { ResponseIA } from "../interface/types";
 import CardResult from "./CardResult";
-import { useGenerateMatch } from "../../services/match";
 
 const Home = () => {
-  const { data } = useGenerateMatch();
-  console.log(data);
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState<ResponseIA>();
   const { handleSubmit, handleChange, values } = useFormik({
@@ -18,7 +15,6 @@ const Home = () => {
     },
     //   validationSchema: loginSchema,
     onSubmit: async ({ name, description }) => {
-      console.log("resp", description);
       setIsLoading(true);
       const res = await generateGemini(name, description);
       console.log("resp", res);
