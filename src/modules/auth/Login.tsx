@@ -16,6 +16,7 @@ import { useAppDispatch } from "../../store/useRedux";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { useEffect } from "react";
+import imageLogin from "../../assets/login.jpg";
 
 const ContainerWrapper = styled("div")(() => ({
   height: "100vh",
@@ -30,7 +31,6 @@ const ContainerForm = styled("div")(() => ({
 }));
 
 const StyledImage = styled("img")(() => ({
-  width: "100%",
   height: "100%",
 }));
 
@@ -124,9 +124,7 @@ const Login = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <StyledImage
-            src={
-              "https://images.pexels.com/photos/3194519/pexels-photo-3194519.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            }
+            src={imageLogin}
             alt="Background"
           />
         </Grid>

@@ -36,7 +36,7 @@ const Header = () => {
       <AppBar position="static" color="primary">
         <Toolbar>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            Supernovas
+            Supernovas 🚀
           </Typography>
           <Button
             color="inherit"
