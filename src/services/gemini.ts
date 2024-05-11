@@ -70,13 +70,13 @@ export const generateGemini = async (title: string, description: string) => {
     Responde estríctamente con un objeto JSON con la estructura anterior. Sin comentarios ni sugerencias adicionales. Nada fuera de la estructura solicitada.  
       `;
 
-    const result = await model.generateContent(prompt);
-    console.log(result.response.text());
-    const profiles = await generateProfiles(title, description);
-    const eliminarBackticks = eliminarBackticksJSON(result.response.text());
-    const response = JSON.parse(eliminarBackticks);
+    //const result = await model.generateContent(prompt);
+    //console.log(result.response.text());
+    //const profiles = await generateProfiles(title, description);
+    //const eliminarBackticks = eliminarBackticksJSON(result.response.text());
+    //const response = JSON.parse(eliminarBackticks);
 
-    response.requiredProfiles = profiles;
+    //response.requiredProfiles = profiles;
 
     const objeto = {
       "client": {
