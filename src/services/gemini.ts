@@ -2,8 +2,15 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(`${process.env.VITE_API_KEY}`);
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-function eliminarBackticksJSON(texto: string): string {
-  
+function eliminarBackticksJSON(str: string): string {
+  // Eliminar ``` al inicio del string junto con la palabra "markdown" (si existe)
+  str = str.replace(/^```(?:json)?/, "");
+
+  // Eliminar ``` al final del string
+  str = str.replace(/```$/, "");
+  str = str.replace(/```/g, "");
+
+  return str;
 }
 const generateProfiles = async (title: string, description: string) => {
     const profilesPrompt = `
@@ -70,74 +77,13 @@ export const generateGemini = async (title: string, description: string) => {
     Responde estríctamente con un objeto JSON con la estructura anterior. Sin comentarios ni sugerencias adicionales. Nada fuera de la estructura solicitada.  
       `;
 
-    //const result = await model.generateContent(prompt);
-    //console.log(result.response.text());
-    //const profiles = await generateProfiles(title, description);
-    //const eliminarBackticks = eliminarBackticksJSON(result.response.text());
-    //const response = JSON.parse(eliminarBackticks);
+    const result = await model.generateContent(prompt);
+    console.log(result.response.text());
+    const profiles = await generateProfiles(title, description);
+    const eliminarBackticks = eliminarBackticksJSON(result.response.text());
+    const response = JSON.parse(eliminarBackticks);
 
-    //response.requiredProfiles = profiles;
+    response.requiredProfiles = profiles;
 
-    const objeto = {
-      "client": {
-          "name": null,
-          "industry": "Logística",
-          "location": {
-              "city": "Ciudad de México",
-              "country": "México"
-          }
-      },
-      "duration": "6",
-      "budget": "200000.00",
-      "scope": [
-          "WEB",
-          "APP",
-          "MOBILE"
-      ],
-      "requiredProfiles": [
-          {
-              "profileTitle": "Desarrollador Full-Stack",
-              "skills": [
-                  "Desarrollo web",
-                  "Desarrollo móvil",
-                  "Algoritmos de optimización",
-                  "Sistemas de seguimiento GPS",
-                  "Logística"
-              ]
-          },
-          {
-              "profileTitle": "Experto en Logística",
-              "skills": [
-                  "Optimización de rutas",
-                  "Sistemas de seguimiento vehicular",
-                  "Planificación de entregas"
-              ]
-          },
-          {
-              "profileTitle": "Project Manager",
-              "skills": [
-                  "Gestión de proyectos",
-                  "Metodologías ágiles",
-                  "Herramientas de gestión de proyectos"
-              ]
-          },
-          {
-              "profileTitle": "Diseñador UX/UI",
-              "skills": [
-                  "Diseño de interfaz de usuario",
-                  "Diseño centrado en el usuario",
-                  "Experiencia de usuario"
-              ]
-          },
-          {
-              "profileTitle": "QA Tester",
-              "skills": [
-                  "Pruebas de software",
-                  "Pruebas de rendimiento",
-                  "Automatización de pruebas"
-              ]
-          }
-      ]
-  }
-    return objeto;
+    return response;
 };
