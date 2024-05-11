@@ -1,4 +1,4 @@
-import { addDoc, collection, onSnapshot, query } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase";
 import { useEffect, useState } from "react";
 
@@ -52,6 +52,7 @@ export const useGetById = <T extends { id: string }>(name: string, id?: string) 
       
       qs.forEach((doc) => {
         const added = { id: doc.id , ...doc.data() } as T;
+        console.log(added)
         docus.push(added);
       });
       setData(docus);
@@ -63,4 +64,10 @@ export const useGetById = <T extends { id: string }>(name: string, id?: string) 
   }, [name]);
 
   return { data: data.filter((item) => item?.id === id) };
+};
+
+export const useGetByIdConsultant = (name: string) => {
+  const refs = async () => await getDocs(collection(db, name))
+
+  return { refs };
 };

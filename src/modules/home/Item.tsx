@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 
 interface ItemProps {
     title: string;
-    options: string[];
+    options?: string[];
   }
 
 const Item: React.FC<ItemProps> = ({ title, options }) => {
@@ -17,7 +17,7 @@ const Item: React.FC<ItemProps> = ({ title, options }) => {
         style={{ padding: 5 }}
       >
         <Grid container spacing={1}>
-        {options.map((option, index) => (
+        {options?.map((option, index) => (
           <Grid item key={index}>
             <Chip color="default" label={option} size="medium" />
           </Grid>

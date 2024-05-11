@@ -3,6 +3,7 @@ const genAI = new GoogleGenerativeAI(`${process.env.VITE_API_KEY}`);
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
 import { useGetData } from "./useSaveData";
+import eliminarBackticksJSON from "./eliminateJson";
 
 export const useGenerateMatch = (project: any) => {
   const { data } = useGetData("consultant");
@@ -20,27 +21,29 @@ export const useGenerateMatch = (project: any) => {
 
     Here's the output schema:
     [{
-      "consultantId": "", e.g. "3eEJj7zrlIOz4SPznuDP", // ID del consultor
-      "score": 0%,
-      "justifyResume": ""
+      "consultantId": "", e.g. "3eEJj7zrlIOz4SPznuDP", // id del consultor debe ser exactamente el mismo
+      "score": "0%", // porcentage del match
+      "justifyResume": "" // justifica este consultor con el proyecto
     },
     {
-      "consultantId": "", 
-      "score": 0%,
-      "justifyResume": ""
+      "consultantId": "", e.g. "3eEJj7zrlIOz4SPznuDP", // id del consultor debe ser exactamente el mismo
+      "score": "0%", // porcentage del match
+      "justifyResume": "" // justifica este consultor con el proyecto
     },
     {
-      "consultantId": "", 
-      "score": 0%,
-      "justifyResume": ""
+      "consultantId": "", e.g. "3eEJj7zrlIOz4SPznuDP", // id del consultor debe ser exactamente el mismo
+      "score": "0%", // porcentage del match
+      "justifyResume": "" // justifica este consultor con el proyecto
     }]
 
     Responde estríctamente con un objeto JSON con la estructura anterior. Sin comentarios ni sugerencias adicionales. Nada fuera de la estructura solicitada.
     IMPORTANTE: ANSWER VARIOUS CONSULTANTS ACCORDING TO THE PROJECT, ITS SCOPE, DURATION Y BUDGET, la idea es armar un equipo completo!
 
     `;
-  console.log(matchPrompt);
   const match = async () => await model.generateContent(matchPrompt);
+
+  // const eliminarBackticks = eliminarBackticksJSON(match.response.text());
+  // const response = JSON.parse(eliminarBackticks);
 
   return { match };
 };
