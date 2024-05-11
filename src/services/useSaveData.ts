@@ -31,7 +31,7 @@ export const useGetData = <T>(name: string) => {
       const docus: T[] = [];
       
       qs.forEach((doc) => {
-        const added = { id: doc.id , ...doc.data() } as T;
+        const added = {...doc.data(), id: doc.id } as T;
         docus.push(added);
       });
       setData(docus);

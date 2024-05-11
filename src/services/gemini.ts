@@ -46,7 +46,6 @@ const generateProfiles = async (title: string, description: string) => {
     `;
 
     const profiles = await model.generateContent(profilesPrompt);
-    console.log(profiles.response.text());
     const eliminarBackticks = eliminarBackticksJSON(profiles.response.text());
     const profilesResponse = JSON.parse(eliminarBackticks);
     return profilesResponse;
@@ -78,8 +77,8 @@ export const generateGemini = async (title: string, description: string) => {
       `;
 
     const result = await model.generateContent(prompt);
-    console.log(result.response.text());
     const profiles = await generateProfiles(title, description);
+    console.log("profiles", profiles);
     const eliminarBackticks = eliminarBackticksJSON(result.response.text());
     const response = JSON.parse(eliminarBackticks);
 
