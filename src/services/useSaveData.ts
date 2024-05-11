@@ -1,4 +1,4 @@
-import { addDoc, collection, onSnapshot, query } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { useEffect, useState } from "react";
 
@@ -43,4 +43,28 @@ export const useGetData = <T>(name: string) => {
   }, [name]);
 
   return { data };
+};
+
+
+export const useGetById = <T extends { id: string }>(name: string, id?: string) => {
+  const [data, setData] = useState<T[]>([]);
+  useEffect(() => {
+
+    const q = query(collection(db, name));
+    const unsubscribe = onSnapshot(q, (qs) => {
+      const docus: T[] = [];
+      
+      qs.forEach((doc) => {
+        const added = { id: doc.id , ...doc.data() } as T;
+        docus.push(added);
+      });
+      setData(docus);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [name]);
+
+  return { data: data.filter((item) => item?.id === id) };
 };

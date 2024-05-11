@@ -20,6 +20,7 @@ const PageHome = Loader(lazy(() => import("../modules/home/Home.tsx")));
 const PageTools = Loader(lazy(() => import('../modules/tools/page')))
 const PageConsultans = Loader(lazy(() => import('../modules/consultans/page')))
 const PageProjects = Loader(lazy(() => import('../modules/projects/page')))
+const DetailProjects = Loader(lazy(() => import('../modules/projects/details')))
 
 const routes: RouteObject[] = [
   {
@@ -58,6 +59,10 @@ const routes: RouteObject[] = [
             path: "projects",
             element: <PageProjects />,
           },
+          {
+            path: "projects/:id",
+            element: <DetailProjects />
+          }
         ],
       },
     ],

@@ -1,6 +1,7 @@
 import {
   Chip,
   Grid,
+  IconButton,
   Paper,
   Stack,
   Table,
@@ -9,12 +10,16 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
   styled,
   tableCellClasses,
 } from "@mui/material";
 import { useGetData } from "../../../services/useSaveData";
 import { ResponseProjects } from "../interface";
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
+import { useNavigate } from "react-router-dom";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -35,11 +40,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-type Projects = { id: string} & ResponseProjects
+type Projects = { id: string } & ResponseProjects;
 
 const DetailProject = () => {
   const { data } = useGetData<Projects>("projects");
-  console.log(data)
+  const navigate = useNavigate();
+  const handleReview = (id: string) => {
+    navigate(`/projects/${id}`);
+  };
+  console.log(data);
 
   return (
     <Grid>
@@ -51,6 +60,7 @@ const DetailProject = () => {
               <StyledTableCell>Localidad</StyledTableCell>
               <StyledTableCell align="center">Habilidades</StyledTableCell>
               <StyledTableCell align="center">Presupuesto</StyledTableCell>
+              <StyledTableCell align="center">Acción</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -75,8 +85,17 @@ const DetailProject = () => {
                     />
                   ))}
                 </StyledTableCell>
+                <StyledTableCell align="center">{row?.budget}</StyledTableCell>
                 <StyledTableCell align="center">
-                  {row?.budget}
+                  <Tooltip title="Revisar proyecto" arrow>
+                    <IconButton
+                      color="warning"
+                      size="small"
+                      onClick={() => handleReview(row?.id)}
+                    >
+                      <DocumentScannerIcon fontSize="small" color="primary"/>
+                    </IconButton>
+                  </Tooltip>
                 </StyledTableCell>
               </StyledTableRow>
             ))}
