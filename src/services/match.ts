@@ -21,19 +21,20 @@ export const useGenerateMatch = (project: any) => {
 
     Here's the output schema:
     [{
-      "consultantId": "", e.g. "3eEJj7zrlIOz4SPznuDP", // id del consultor debe ser exactamente el mismo
-      "score": "0%", // porcentage del match
+      "consultantId": "", e.g. "3eEJj7zrlIOz4SPznuDP", "QtCRkytJ35anzr6kX9HE", "SgutFheiJIsN6BbiiXjW", "TlpVOqZNOHNclXOGJMEB", "WZd1C8UEGK4DaQy7PSEZ", "XhY3TbN5BfAkdEoKQvQ0", "fN7qzGDub4Wrf1K7uiyr", "oFmOxmd2SzysByXluDpY", "qyU2X2Ukey9Ryt0iP0yj", "wGmBRmjGrBIcQJyukwqY" // solo las opciones anteriores son validas!
+
+      "score": "0%", // porcentaje del match
       "justifyResume": "" // justifica este consultor con el proyecto
     },
     {
-      "consultantId": "", e.g. "3eEJj7zrlIOz4SPznuDP", // id del consultor debe ser exactamente el mismo
+      "consultantId": "", 
       "score": "0%", // porcentage del match
-      "justifyResume": "" // justifica este consultor con el proyecto
+      "justifyResume": ""
     },
     {
-      "consultantId": "", e.g. "3eEJj7zrlIOz4SPznuDP", // id del consultor debe ser exactamente el mismo
-      "score": "0%", // porcentage del match
-      "justifyResume": "" // justifica este consultor con el proyecto
+      "consultantId": "",
+      "score": "0%",
+      "justifyResume": ""
     }]
 
     Responde estríctamente con un objeto JSON con la estructura anterior. Sin comentarios ni sugerencias adicionales. Nada fuera de la estructura solicitada.
