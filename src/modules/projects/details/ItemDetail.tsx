@@ -7,14 +7,12 @@ import {
   Grid,
   IconButton,
   IconButtonProps,
-  Stack,
   Typography,
   styled,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
-  useGetById,
   useGetByIdConsultant,
 } from "../../../services/useSaveData";
 import { ConsultansInterface } from "../../interface/types";

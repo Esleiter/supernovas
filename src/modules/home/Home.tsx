@@ -14,11 +14,11 @@ const Home = () => {
   function extractText(event: any) {
     const file = event.target.files[0];
     pdfToText(file)
-      .then((text) => {
+      .then((text: any) => {
         setText(text);
         console.log(text); // Esto imprimirá el texto extraído en la consola
       })
-      .catch((error) => console.error("Failed to extract text from pdf"));
+      .catch((error: any) => console.error(error, "Failed to extract text from pdf"));
   }
 
   const { handleSubmit, handleChange, values, setValues } = useFormik({

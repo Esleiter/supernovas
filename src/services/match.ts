@@ -3,7 +3,6 @@ const genAI = new GoogleGenerativeAI(`${process.env.VITE_API_KEY}`);
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
 import { useGetData } from "./useSaveData";
-import eliminarBackticksJSON from "./eliminateJson";
 
 export const useGenerateMatch = (project: any) => {
   const { data } = useGetData("consultant");
