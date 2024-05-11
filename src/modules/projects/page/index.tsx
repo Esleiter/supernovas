@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Chip,
   Grid,
   Paper,
@@ -15,7 +14,6 @@ import {
   tableCellClasses,
 } from "@mui/material";
 import { useGetData } from "../../../services/useSaveData";
-import { ConsultansInterface } from "../../interface/types";
 import { ResponseProjects } from "../interface";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
