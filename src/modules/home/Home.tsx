@@ -15,10 +15,11 @@ const Home = () => {
     },
     //   validationSchema: loginSchema,
     onSubmit: async ({ name, description }) => {
+      console.log("resp", description);
       setIsLoading(true);
       const res = await generateGemini(name, description);
-      setResponse(res);
       console.log("resp", res);
+      setResponse(res);
       setIsLoading(false);
     },
   });

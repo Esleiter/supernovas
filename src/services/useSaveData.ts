@@ -4,22 +4,18 @@ import { useEffect, useState } from "react";
 
 export const useSaveData = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState();
 
   // eslint-disable-next-line
   const save = async (name: string, data: any) => {
     const myCollection = collection(db, name);
     setIsLoading(true);
     const resp: any = await addDoc(myCollection, data);
-    setResponse(resp);
-    console.log(resp);
-
     setIsLoading(false);
+    return resp
   };
   return {
     save,
-    isLoading,
-    response,
+    isLoading
   };
 };
 
@@ -31,7 +27,7 @@ export const useGetData = <T>(name: string) => {
       const docus: T[] = [];
       
       qs.forEach((doc) => {
-        const added = { id: doc.id , ...doc.data() } as T;
+        const added = { ...doc.data(), id: doc.id , } as T;
         docus.push(added);
       });
       setData(docus);

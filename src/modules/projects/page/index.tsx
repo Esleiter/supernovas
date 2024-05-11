@@ -16,9 +16,9 @@ import {
   tableCellClasses,
 } from "@mui/material";
 import { useGetData } from "../../../services/useSaveData";
-import { ResponseProjects } from "../interface";
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import { useNavigate } from "react-router-dom";
+import { ResponseIA } from "../../interface/types";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,7 +40,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-type Projects = { id: string } & ResponseProjects;
+type Projects = { id: string } & ResponseIA;
 
 const DetailProject = () => {
   const { data } = useGetData<Projects>("projects");
@@ -58,7 +58,7 @@ const DetailProject = () => {
             <TableRow>
               <StyledTableCell>Nombre</StyledTableCell>
               <StyledTableCell>Localidad</StyledTableCell>
-              <StyledTableCell align="center">Habilidades</StyledTableCell>
+              <StyledTableCell align="center">Tecnologías</StyledTableCell>
               <StyledTableCell align="center">Presupuesto</StyledTableCell>
               <StyledTableCell align="center">Acción</StyledTableCell>
             </TableRow>
@@ -68,14 +68,14 @@ const DetailProject = () => {
               <StyledTableRow key={row?.id}>
                 <StyledTableCell component="th" scope="row">
                   <Stack direction="row" spacing={2}>
-                    <Typography>{row?.client?.name}</Typography>
+                    <Typography>{row?.client?.name ?? row?.client?.industry ?? 'Sin info'}</Typography>
                   </Stack>
                 </StyledTableCell>
                 <StyledTableCell align="left">
                   {row?.client?.location?.city}
                 </StyledTableCell>
                 <StyledTableCell width={5}>
-                  {row?.developer?.skills?.map((skill, index) => (
+                  {row?.scope?.map((skill, index) => (
                     <Chip
                       color="primary"
                       sx={{ marginRight: 1, marginTop: 1 }}
