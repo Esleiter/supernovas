@@ -4,13 +4,15 @@ Este es un proyecto de React creado utilizando vite integrado con gemini.
 
 ## Getting Started
 
-Primeras dependencias de instalación:
+Primero debemos abrir nuestro proyecto y renombrar el archivo `.env.example` a `.env`
+
+Luego procedemos a la instalación de dependencias:
 
 ```bash
 npm install
 ```
 
-Luego, ejecute el servidor de desarrollo:
+Por ultimo, ejecute el servidor de desarrollo:
 
 ```bash
 npm run dev
