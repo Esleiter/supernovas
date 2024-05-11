@@ -1,9 +1,9 @@
 export interface ResponseIA {
-    client:       Client;
-    duration:     string;
-    budget:       string;
-    requirements: Requirements;
-    developer:    Developer;
+    client:           Client;
+    duration:         string;
+    budget:           string;
+    scope:            string[];
+    requiredProfiles: RequiredProfile[];
 }
 
 export interface Client {
@@ -17,14 +17,11 @@ export interface Location {
     country: string;
 }
 
-export interface Developer {
-    skills: string[];
+export interface RequiredProfile {
+    profileTitle: string;
+    skills:       string[];
 }
 
-export interface Requirements {
-    technologies:       string[];
-    requiredExperience: string[];
-}
 
 
 export interface ConsultansInterface {

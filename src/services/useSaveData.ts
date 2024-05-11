@@ -4,22 +4,18 @@ import { useEffect, useState } from "react";
 
 export const useSaveData = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState();
 
   // eslint-disable-next-line
   const save = async (name: string, data: any) => {
     const myCollection = collection(db, name);
     setIsLoading(true);
     const resp: any = await addDoc(myCollection, data);
-    setResponse(resp);
-    console.log(resp);
-
     setIsLoading(false);
+    return resp
   };
   return {
     save,
-    isLoading,
-    response,
+    isLoading
   };
 };
 
