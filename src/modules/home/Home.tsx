@@ -4,11 +4,24 @@ import { generateGemini } from "../../services/gemini";
 import { useState } from "react";
 import { ResponseIA } from "../interface/types";
 import CardResult from "./CardResult";
+import pdfToText from 'react-pdftotext'
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState<ResponseIA>();
-  const { handleSubmit, handleChange, values } = useFormik({
+  const [text, setText] = useState("")
+
+  function extractText(event: any) {
+    const file = event.target.files[0];
+    pdfToText(file)
+      .then((text) => {
+        setText(text);
+        console.log(text); // Esto imprimirá el texto extraído en la consola
+      })
+      .catch((error) => console.error("Failed to extract text from pdf"));
+  }
+
+  const { handleSubmit, handleChange, values, setValues } = useFormik({
     initialValues: {
       name: "",
       description: "",
@@ -16,12 +29,19 @@ const Home = () => {
     //   validationSchema: loginSchema,
     onSubmit: async ({ name, description }) => {
       setIsLoading(true);
+      if (text) {
+        // Si se ha extraído texto del PDF, agregamos esa información a la descripción
+        description += "\n\n---Texto extraído del PDF---\n\n" + text;
+        // Actualizamos los valores del formulario con la nueva descripción
+        setValues({ name, description });
+      }
       const res = await generateGemini(name, description);
       console.log("resp", res);
       setResponse(res);
       setIsLoading(false);
     },
   });
+  
   return (
     <Grid container>
       <Card variant="outlined" style={{ width: "100%" }}>
@@ -45,6 +65,7 @@ const Home = () => {
               multiline
               rows={4}
             />
+            <input type="file" accept="application/pdf" onChange={extractText} />
           </Grid>
           <Grid container justifyContent={"center"} marginTop={2}>
             <Button variant="contained" type="submit" disabled={isLoading}>
