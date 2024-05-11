@@ -13,21 +13,34 @@ export const useGenerateMatch = (project: any) => {
 
   const matchPrompt = `
     proyecto: ${JSON.stringify(project)}
-    consultans: ${JSON.stringify(consultansResume)}
+    consultores: ${JSON.stringify(consultansResume)}
+
+    Con el proyecto y consultores anteriores como referencia, ejecuta lo siguiente:
+    Contruye un ARRAY con la siguiente estructura segun el proyecto y consultores:
+
+    Here's the output schema:
+    [{
+      "consultantId": "", e.g. "3eEJj7zrlIOz4SPznuDP", // ID del consultor
+      "score": 0%,
+      "justifyResume": ""
+    },
+    {
+      "consultantId": "", 
+      "score": 0%,
+      "justifyResume": ""
+    },
+    {
+      "consultantId": "", 
+      "score": 0%,
+      "justifyResume": ""
+    }]
+
+    Responde estríctamente con un objeto JSON con la estructura anterior. Sin comentarios ni sugerencias adicionales. Nada fuera de la estructura solicitada.
+    IMPORTANTE: ANSWER VARIOUS CONSULTANTS ACCORDING TO THE PROJECT, ITS SCOPE, DURATION Y BUDGET, la idea es armar un equipo completo!
+
     `;
   console.log(matchPrompt);
   const match = async () => await model.generateContent(matchPrompt);
 
   return { match };
 };
-
-function eliminarBackticksJSON(str: string): string {
-  // Eliminar ``` al inicio del string junto con la palabra "markdown" (si existe)
-  str = str.replace(/^```(?:json)?/, "");
-
-  // Eliminar ``` al final del string
-  str = str.replace(/```$/, "");
-  str = str.replace(/```/g, "");
-
-  return str;
-}
